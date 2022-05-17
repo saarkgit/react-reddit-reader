@@ -2,13 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 // import App from './App';
-import Reddit from './Reddit';
+// import Reddit from './Reddit';
+import NewReddit from './NewReddit'
 import reportWebVitals from './reportWebVitals';
+import Data from './exData.json';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Reddit />
+    <NewReddit data={Data}/>
   </React.StrictMode>
 );
 

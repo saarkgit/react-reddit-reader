@@ -32,7 +32,7 @@ class AllPosts extends React.Component {
     this.props.data.forEach((ele) => {
       ele.isOpen = !ele.isOpen;
     })
-    this.setState({a: "apple"})
+    this.setState({ a: "apple" })
   }
 
   checkIfExisting(post, key, value) {
@@ -49,10 +49,10 @@ class AllPosts extends React.Component {
           <Post
             key={element.title}
             post={element}
-            // parentState={this.state.openAll}
-            // parentData={this.props.data}
+          // parentState={this.state.openAll}
+          // parentData={this.props.data}
           />;
-          posts.push(createdPost);
+        posts.push(createdPost);
       }
     });
 
@@ -84,7 +84,7 @@ class Post extends React.Component {
 
   componentWillReceiveProps() {
     // this.setState({openStatus: !this.props.parentState})
-    this.setState({openStatus: this.props.post.isOpen})
+    this.setState({ openStatus: this.props.post.isOpen })
   }
   // static getDerivedStateFromProps() {
   //   this.setState({openStatus: false})
