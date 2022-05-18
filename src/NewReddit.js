@@ -1,102 +1,107 @@
 import React from 'react';
-import { useState } from 'react';
-function Post(props) {
-  const [openStatus, setStatus] = useState(true);
 
-  if (openStatus) {
+function Thread(props) {
+  // const [openStatus, setOpenStatus] = useState(true);
+
+  if (props.status) {
     return (
-      // <button onClick={() => setStatus(!props.post.isOpen) props.handleClick}>
-      
-      <button onClick={() => setStatus(!openStatus)}>
+      <button onClick={props.onClick}>
         <p>Title: {props.post.title}</p>
         <p>User: {props.post.user}</p>
         <p>Time: {props.post.time}</p>
         <p>Content: {props.post.content}</p>
-        <hr />
       </button>
     );
   }
 
   return (
-    // <button onClick={props.handleClick}>
-      <button onClick={() => setStatus(!openStatus)}>
+    <button onClick={props.onClick}>
       <p>Title: {props.post.title}</p>
       <p>User: {props.post.user}</p>
       <p>Time: {props.post.time}</p>
-      <hr />
     </button>
   );
 }
 
+// function handleClick(data) {
+//   if (data.length > 0) {
+//     data.forEach(element => {
+//       element.setOpenStatus({ status: false });
+//     });
+//   }
+// }
+
 class AllPosts extends React.Component {
-  renderPost(element) {
+  constructor(props) {
+    super(props);
+    this.state = {
+      externalData: [
+        
+      ],
+      status: false
+    };
+
+    let count = 0;
+    const status = false;
+    this.props.data.forEach((element) => {
+      if (!this.state.externalData.some(
+        (post) => this.checkIfExisting(post, element.title)
+      )) {
+        this.state.externalData.push(this.createPost(element, count, status))
+        count++;
+      }
+    })
+
+    // this.handleClick = this.handleClick.bind(this);
+    this.handlePostClick = this.handlePostClick.bind(this);
+    this.createPost = this.createPost.bind(this);
+  }
+
+  createPost(element, index, status) {
     return (
-      <Post
+      <Thread
         key={element.title}
         post={element}
-        onClick={() => this.props.onClick(element)}
+        status={status}
+        onClick={() => this.handlePostClick(index)}
       />
     )
   }
 
-  checkIfExisting(post, key, value) {
-    return post[key] === value;
+
+
+  // handleClick() {
+  //   this.state.externalData.forEach(element => {
+  //     element.setOpenStatus(false);
+  //   });
+  // }
+
+  handlePostClick(index) {
+    let arr = [...this.state.externalData];
+    // let newElem = JSON.parse(JSON.stringify(arr[index]));
+    let newElem = this.createPost(arr[index].props.post, index, !arr[index].props.status)
+    // newElem.props.status = !newElem.props.status;
+    arr[index] = newElem;
+    this.setState({ externalData: arr });
+    // this.setState({externalData[index]: 0}); //[index][0]: externalData[index][0]
+
+  }
+
+  checkIfExisting(post, value) {
+    return post["key"] === value;
   }
 
   render() {
-    // might have dupes
-    this.props.data.forEach((element) => {
-      if (!this.props.threads.some(
-        (post) => this.checkIfExisting(post, "key", element.title)
-      )) {
-        this.props.threads.push(this.renderPost(element))
-      }
-    })
     return (
       <div>
-        {this.props.threads}
-      </div>
-    )
-  }
-}
-
-class NewReddit extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      externalData: [],
-    };
-  }
-
-  handleClose() {
-
-  }
-
-  handleClick(i) {
-    this.setState({
-      // threads[i]: 
-    });
-  }
-
-  render() {
-    // const isOpen = { isOpen: true };
-    // let dataPlus = Object.assign(this.props.data, isOpen);
-    // dataPlus.forEach(element => { Object.assign(element, isOpen) });
-
-    return (
-      <div className="game">
         <h1>using local json file</h1>
-        <div className="game-board">
-          <AllPosts
-            data={this.props.data}
-            onClick={i => this.handleClick(i)}
-            threads={this.state.externalData}
-          />
+        {/* <button onClick={this.handleClick}>Open All</button> */}
+        <div>
+          {this.state.externalData}
         </div>
-        <button onClick={this.handleClose}>Close All</button>
       </div>
     );
   }
 }
 
-export default NewReddit;
+export default AllPosts;
