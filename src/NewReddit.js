@@ -1,8 +1,6 @@
 import React from 'react';
 
 function Thread(props) {
-  // const [openStatus, setOpenStatus] = useState(true);
-
   if (props.status) {
     return (
       <button onClick={props.onClick}>
@@ -23,36 +21,32 @@ function Thread(props) {
   );
 }
 
-// function handleClick(data) {
-//   if (data.length > 0) {
-//     data.forEach(element => {
-//       element.setOpenStatus({ status: false });
-//     });
-//   }
-// }
-
 class AllPosts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      externalData: [
-        
-      ],
+      allPosts: [],
       status: false
     };
 
     let count = 0;
     const status = false;
-    this.props.data.forEach((element) => {
-      if (!this.state.externalData.some(
+    const dataArray = this.props.data;
+    let allPostsArr = [];
+
+    dataArray.forEach((element) => {
+      if (!this.state.allPosts.some(
         (post) => this.checkIfExisting(post, element.title)
       )) {
-        this.state.externalData.push(this.createPost(element, count, status))
+        this.state.allPosts.push(this.createPost(element, count, status))
+        allPostsArr.push(this.createPost(element, count, status))
         count++;
       }
     })
 
-    // this.handleClick = this.handleClick.bind(this);
+    this.setState({allPosts: allPostsArr});
+
+    this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handlePostClick = this.handlePostClick.bind(this);
     this.createPost = this.createPost.bind(this);
   }
@@ -68,23 +62,23 @@ class AllPosts extends React.Component {
     )
   }
 
-
-
-  // handleClick() {
-  //   this.state.externalData.forEach(element => {
-  //     element.setOpenStatus(false);
-  //   });
-  // }
+  handleButtonClick(bool) {
+    let count = 0;
+    let arr = [...this.state.allPosts];
+    arr.forEach(element => {
+      let newElem = this.createPost(element.props.post, count, bool)      
+      arr[count] = newElem;
+      count++;
+    });
+    
+    this.setState({ allPosts: arr });
+  }
 
   handlePostClick(index) {
-    let arr = [...this.state.externalData];
-    // let newElem = JSON.parse(JSON.stringify(arr[index]));
+    let arr = [...this.state.allPosts];
     let newElem = this.createPost(arr[index].props.post, index, !arr[index].props.status)
-    // newElem.props.status = !newElem.props.status;
     arr[index] = newElem;
-    this.setState({ externalData: arr });
-    // this.setState({externalData[index]: 0}); //[index][0]: externalData[index][0]
-
+    this.setState({ allPosts: arr });
   }
 
   checkIfExisting(post, value) {
@@ -95,9 +89,10 @@ class AllPosts extends React.Component {
     return (
       <div>
         <h1>using local json file</h1>
-        {/* <button onClick={this.handleClick}>Open All</button> */}
+        <button onClick={() => this.handleButtonClick(true)}>Open All</button>
+        <button onClick={() => this.handleButtonClick(false)}>Close All</button>
         <div>
-          {this.state.externalData}
+          {this.state.allPosts}
         </div>
       </div>
     );
