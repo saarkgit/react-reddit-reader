@@ -2,17 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 // import App from './App';
-// import Reddit from './Reddit';
+import RedditApi from './RedditApi';
 import AllPosts from './NewReddit'
 // import TwoCompReddit from './TwoCompReddit';
 import reportWebVitals from './reportWebVitals';
+import SORender from './SORender';
 import Data from './exData.json';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <AllPosts data={Data}/>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <React.Fragment>
+    <AllPosts />
+    
+    {/* <RedditApi /> */}
+    {/* <SORender /> */}
+  {/* </React.StrictMode> */}
+  </React.Fragment>
 );
 
 // If you want to start measuring performance in your app, pass a function
