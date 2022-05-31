@@ -5,17 +5,18 @@ function Thread(props) {
   if (props.status) {
     return (
       <button className='threadButton' onClick={props.onClick}>
-        <p>Title: {props.post.data.title}</p>
+        <p style={{fontSize: 18}}>Title: {props.post.data.title}</p>
         <p>User: {props.post.data.author}</p>
         <p>Time: {date}</p>
-        <p className='content'>Content: {props.post.data.selftext}</p>
+        <p>Content:</p>
+        <p className='content'>{props.post.data.selftext}</p>
       </button>
     );
   }
 
   return (
     <button className='threadButton' onClick={props.onClick}>
-      <p>Title: {props.post.data.title}</p>
+      <p style={{fontSize: 18}}>Title: {props.post.data.title}</p>
       <p>User: {props.post.data.author}</p>
       <p>Time: {date}</p>
     </button>
