@@ -1,23 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-// import App from './App';
-import RedditApi from './RedditApi';
-import AllPosts from './NewReddit'
-// import TwoCompReddit from './TwoCompReddit';
+import PulledThreads from './NewReddit'
 import reportWebVitals from './reportWebVitals';
-import SORender from './SORender';
-import Data from './exData.json';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <React.StrictMode>
   <React.Fragment>
-    <AllPosts />
-    
-    {/* <RedditApi /> */}
-    {/* <SORender /> */}
-  {/* </React.StrictMode> */}
+    <PulledThreads />
   </React.Fragment>
 );
 
