@@ -4,17 +4,17 @@ function Thread(props) {
   let date = new Date(props.post.data.created * 1000).toLocaleString('en-GB');
   if (props.status) {
     return (
-      <button onClick={props.onClick}>
+      <button className='threadButton' onClick={props.onClick}>
         <p>Title: {props.post.data.title}</p>
         <p>User: {props.post.data.author}</p>
         <p>Time: {date}</p>
-        <p>Content: {props.post.data.selftext}</p>
+        <p className='content'>Content: {props.post.data.selftext}</p>
       </button>
     );
   }
 
   return (
-    <button onClick={props.onClick}>
+    <button className='threadButton' onClick={props.onClick}>
       <p>Title: {props.post.data.title}</p>
       <p>User: {props.post.data.author}</p>
       <p>Time: {date}</p>
@@ -52,9 +52,11 @@ class PulledThreads extends React.Component {
               if (!this.state.allThreads.some(
                 (post) => this.checkIfExisting(post, thread.data.title)
               )) {
-                this.state.allThreads.push(this.createThread(thread, indexCount, this.state.threadVisible))
-                tempAllThreads.push(this.createThread(thread, indexCount, this.state.threadVisible))
-                indexCount++;
+                if (thread.data.distinguished === null) {
+                  this.state.allThreads.push(this.createThread(thread, indexCount, this.state.threadVisible))
+                  tempAllThreads.push(this.createThread(thread, indexCount, this.state.threadVisible))
+                  indexCount++;
+                }
               }
             })
 
@@ -101,14 +103,18 @@ class PulledThreads extends React.Component {
 
   render() {
     return (
-      <div>
+      <body>
         <h1>Grabbing Data from Reddit</h1>
-        <input type="text" size={30} id='searchInput' placeholder='Enter a text-based subreddit...'></input>
-        <button onClick={this.getSubreddit}>Get Subreddit</button>
-        <button onClick={() => this.handleButtonClick(true)}>Open All</button>
-        <button onClick={() => this.handleButtonClick(false)}>Close All</button>
-        <div>{this.state.allThreads}</div>
-      </div>
+        <div className='buttons'>
+          <input type="text" size={30} id='searchInput' placeholder='Enter a text-based subreddit...'></input>
+          <button onClick={this.getSubreddit}>Get Subreddit</button>
+          <button onClick={() => this.handleButtonClick(true)}>Open All</button>
+          <button onClick={() => this.handleButtonClick(false)}>Close All</button>
+        </div>
+        <div className='threads'>
+          {this.state.allThreads}
+        </div>
+      </body>
     );
   }
 }
