@@ -1,6 +1,6 @@
 # React/Reddit Project
 
-This is a personal project aimed I worked on to learn [React](https://reactjs.org/) and gain experience with interacting and displaying online data. 
+This is a personal project I worked on to learn [React](https://reactjs.org/) and gain experience with interacting and displaying online data.
 
 Intro Page
 <br>
